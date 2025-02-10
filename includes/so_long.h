@@ -1,18 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jcosta-b <jcosta-b@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/10 14:41:28 by jcosta-b          #+#    #+#             */
+/*   Updated: 2025/02/10 17:25:14 by jcosta-b         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SO_LONG_H
 #define SO_LONG_H
 
 # include "../minilibx-linux/mlx.h"
+# include "../libft/libft.h"
 # include<fcntl.h>  // Para open()
 # include<unistd.h> // Para read() e close()
 # include<stdlib.h> // Para malloc()
-
+# include <stdio.h>
 
 typedef struct s_game {
-    void *mlx;  // Ponteiro para MLX
-    void *win;  // Ponteiro para a janela
+    int x;
+    int y;
+    void *mlx;
+    void *win;
 } t_game;
 
-void init_game(t_game *game);  // Protótipo da função para iniciar o jogo
+// void init_game(t_game *game);
 
 #endif
 
