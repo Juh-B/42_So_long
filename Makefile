@@ -9,7 +9,8 @@ LIBFT = $(LIBFT_DIR)/libft.a
 MLX_PATH = ./minilibx-linux
 MLX_FLAGS = -L$(MLX_PATH) -lmlx -lXext -lX11
 
-SRCS = srcs/so_long.c
+SRCS = srcs/so_long.c srcs/map_verify.c srcs/verif_map_struct.c
+
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
