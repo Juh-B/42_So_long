@@ -6,7 +6,7 @@
 /*   By: jcosta-b <jcosta-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 14:41:28 by jcosta-b          #+#    #+#             */
-/*   Updated: 2025/02/10 17:25:14 by jcosta-b         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:58:48 by jcosta-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,24 @@
 
 # include "../minilibx-linux/mlx.h"
 # include "../libft/libft.h"
-# include<fcntl.h>  // Para open()
-# include<unistd.h> // Para read() e close()
-# include<stdlib.h> // Para malloc()
+# include <fcntl.h>  // Para open()
+# include <unistd.h> // Para read() e close()
+# include <stdlib.h> // Para malloc()
 # include <stdio.h>
 
 typedef struct s_game {
-    int x;
-    int y;
-    void *mlx;
-    void *win;
+    size_t length;
+    size_t width;
+    size_t exit;
+    size_t player;
+    size_t collectible;
+    char **map;
+    // void *mlx;
+    // void *win;
 } t_game;
 
+int	map_verify(char *map_file, t_game *game);
+int	verif_map_struct(t_game *game);
 // void init_game(t_game *game);
 
 #endif
