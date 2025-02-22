@@ -6,12 +6,12 @@
 /*   By: jcosta-b <jcosta-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 15:56:46 by jcosta-b          #+#    #+#             */
-/*   Updated: 2025/02/11 16:53:57 by jcosta-b         ###   ########.fr       */
+/*   Updated: 2025/02/12 18:19:56 by jcosta-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include <mlx.h>
+// #include <mlx.h>
 #include "../includes/so_long.h"
 
 // void	create_map(t_list **lst, char *content)
@@ -24,30 +24,181 @@
 // 	ft_lstadd_back(lst, new_node);
 // }
 
+void	placeof_P_E(size_t col, size_t row, t_player *player, t_exit *exit, char c)
+{
+	if (c == 'P')
+	{
+		player->col = col;
+		player->row = row;
+	}
+	if (c == 'E')
+	{
+		exit->col = col;
+		exit->row = row;
+	}
+}
 
+
+int	placeof_C(size_t col, size_t row, t_coins **coins)
+{
+  t_coins	*new_node;
+  t_coins	*temp;
+
+	new_node = malloc(sizeof(t_coins));
+	if (!new_node)
+		return (1);
+	new_node->col = col;
+	new_node->row = row;
+	new_node->next = NULL;
+	if (!coins)
+		return (1);
+	if (!*coins)
+	{
+		*coins = new_node;
+		return (0);
+	}
+	temp = *coins;
+	while (temp->next)
+		temp = temp->next;
+	temp->next = new_node;
+  return (0);
+}
+
+
+// void	create_stack(t_coins **coins, void *content)
+// {
+// 	t_coins	*new_node;
+
+// 	new_node = malloc(sizeof(t_coins));
+// 	if (!new_node)
+// 		return (NULL);
+// 	new_node->x = x;
+// 	new_node->y = y;
+// 	new_node->next = NULL;
+
+//   t_coins	*temp;
+
+// 	if (!coins)
+// 		return ;
+// 	if (!*coins)
+// 	{
+// 		*coins = new_node;
+// 		return ;
+// 	}
+// 	temp = *coins;
+// 	while (temp->next)
+// 		temp = temp->next;
+// 	temp->next = new_node;
+// }
+
+
+int	elem_inic(t_game *game, t_player *player, t_exit *exit, t_coins **coins)
+{
+	int	col;
+	int	row;
+
+	row = 0;
+	while (game->map[row])
+	{
+		col = 0;
+		while (game->map[row][col])
+		{
+			if (game->map[row][col] == 'P' || game->map[row][col] == 'E')
+				placeof_P_E(col, row, player, exit, game->map[row][col]);
+			else if (game->map[row][col] == 'C')
+      {
+				if (placeof_C(col, row, coins))
+          return (1);
+      }
+			col++;
+		}
+		row++;
+	}
+	if (game->exit != 1 || game->player != 1 || game->coins < 1)
+		return (1);
+	return (0);
+}
+
+void	ft_free(t_coins *coins)
+{
+	t_coins	*temp;
+
+	if (coins == NULL)
+		return ;
+	while (coins)
+	{
+		temp = coins->next;
+		free(coins);
+		coins = temp;
+	}
+}
+
+void	fr_free_game(t_game *game)
+{
+  int i;
+
+  i = 0;
+  while (game->map[i])
+  {
+    free(game->map[i]);
+    i++;
+  }
+  free(game->map);
+}
 
 int	main(int argc, char **argv)
 {
 	// void	*mlx;
 	// void	*mlx_win;
-	t_game	game = {0, 0, 0, 0, 0, 0};
+
+	t_game	game = {0, 0, 0, 0, 0, 0, 0, '\0'};
+	t_exit	exit = {0, 0, "false"};
+	t_player	player = {0, 0};
+	t_coins	*coins = NULL;
+  // int   n;
 
 	// printf("oi\n");
 	// map_compl = NULL;
+  // n = 0;
 	if (argc == 2)
 	{
-		map_verify(argv[1], &game);
-		// mlx = mlx_init();
-		// mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-		// mlx_loop(mlx);
+		if (map_verify(argv[1], &game))
+    {
+      if (game.map)
+        fr_free_game(&game);
+      return (1);
+    }
+    elem_inic(&game, &player, &exit, &coins);
+		if (elem_inic(&game, &player, &exit, &coins))
+    {
+      if (coins)
+        ft_free(coins);
+      return (1);
+    }
+	// 	// mlx = mlx_init();
+	// 	// mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
+	// 	// mlx_loop(mlx);
 	}
-	// printf("blz\n");
+  // printf("Player. (%zu, %ld)\n", player.x, player.y);
+  // printf("Exit. (%zu, %ld)\n", exit.x, exit.y);
+  // while (coins)
+  // {
+  //   printf("coins. (%zu, %ld)\n", coins->x, coins->y);
+  //   coins = coins->next;
+  // }
+
+
+	// // printf("blz\n");
 	// printf("map. %s\n", game.map[0]);
-	// int i = 0;
-	// while (game.map[i])
-	// {
-	// 	printf("str. %s\n", game.map[i]);
-	// 	i++;
-	// }
+	int i = 0;
+	while (game.map[i])
+	{
+		printf("map. %s\n", game.map[i]);
+		i++;
+	}
+  if (coins)
+    ft_free(coins);
+  if (game.map)
+    fr_free_game(&game);
 	return (0);
 }

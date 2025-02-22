@@ -6,7 +6,7 @@
 /*   By: jcosta-b <jcosta-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:55:38 by jcosta-b          #+#    #+#             */
-/*   Updated: 2025/02/11 18:12:13 by jcosta-b         ###   ########.fr       */
+/*   Updated: 2025/02/12 17:58:33 by jcosta-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,22 @@
 
 int	verif_map_size(t_game *game)
 {
-	int	i;
+	int	col;
+	int	row;
 
-	i = 0;
-	while (game->map[0][i])
+	col = 0;
+	while (game->map[0][col])
 	{
 		game->length++;
-		i++;
+		col++;
 	}
-	i = 0;
-	while (game->map[i])
+	row = 0;
+	while (game->map[row])
 	{
 		game->width++;
-		if (ft_strlen(game->map[i]) != game->length)
+		if (ft_strlen(game->map[row]) != game->length)
 			return (1);
-		i++;
+    row++;
 	}
 	return (0);
 }
@@ -42,69 +43,126 @@ int	inicialize_elem(t_game *game, char c)
 	if (c == 'P')
 		game->player++;
 	if (c == 'C')
-		game->collectible++;
+		game->coins++;
 	return (0);
 }
 
 int	verif_map_elem(t_game *game)
 {
-	int	i;
-	int	j;
-	// char	c;
+	int	col;
+	int	row;
 
-	i = 0;
-	while (game->map[i])
+	row = 0;
+	while (game->map[row])
 	{
-		j = 0;
-		while (game->map[i][j])
+		col = 0;
+		while (game->map[row][col])
 		{
-			if (inicialize_elem(game, game->map[i][j]))
+			if (inicialize_elem(game, game->map[row][col]))
 				return (1);
-			j++;
+      if (game->map[row][col] == 'P')
+      {
+        game->player_col = col;
+        game->player_row = row;
+      }
+			col++;
 		}
-		i++;
+		row++;
 	}
-	if (game->exit != 1 || game->player != 1 || game->collectible < 1)
+	if (game->exit != 1 || game->player != 1 || game->coins < 1)
 		return (1);
 	return (0);
 }
 
 int	verif_map_wall(t_game *game)
 {
-	int		x;
-	int		y;
-	int		x_max;
-	int		y_max;
+	int		col;
+	int		row;
+	int		col_max;
+	int		row_max;
 	char	c;
 
-	x_max = (int)game->length - 1;
-	y_max = game->width;
-	y = 0;
-	while (game->map[y])
+	col_max = game->length - 1;
+	row_max = game->width - 1;
+	row = 0;
+	while (game->map[row])
 	{
-		x = 0;
-		while (game->map[y][x])
+		col = 0;
+		while (game->map[row][col])
 		{
-			c = game->map[y][x];
-			if (x == 0 || x == x_max || y == 0 || y == y_max)
+			c = game->map[row][col];
+			if (col == 0 || col == col_max || row == 0 || row == row_max)
 			{
 				if (c != '1')
 					return (1);
 			}
-			x++;
+			col++;
 		}
-		y++;
+		row++;
 	}
 	return (0);
 }
 
-int	verif_map_struct(t_game *game)
+void  valid_path(char **map, int col, int row, t_verif_path *verif_path)
+{
+  if (col < 0 || col >= (int)verif_path->cols)
+    return ;
+  if (row < 0 || row >= (int)verif_path->rows)
+    return ;
+  if (map[row][col] == '1' || map[row][col] == 'V')
+    return ;
+  if (map[row][col] == 'E')
+  {
+    verif_path->found_exit = 1;
+    printf("Found Exit\n");
+  }
+  if (map[row][col] == 'C')
+  {
+    printf("Found COINS\n");
+    verif_path->found_coins--;
+  }
+  map[row][col] = 'V';
+  valid_path(map, (col + 1), row, verif_path);
+  valid_path(map, (col - 1), row, verif_path);
+  valid_path(map, col, (row + 1), verif_path);
+  valid_path(map, col, (row - 1), verif_path);
+}
+
+int	verif_map_path(t_game *game, t_verif_path *verif_path)
+{
+  verif_path->cols = game->length - 1;
+  verif_path->rows = game->width - 1;
+  verif_path->found_coins = game->coins;
+  valid_path(verif_path->map, game->player_col, game->player_row, verif_path);
+  if (verif_path->found_exit && verif_path->found_coins == 0)
+    return (0);
+  else
+    return (1);
+}
+
+static int	ft_error_struct(int code)
+{
+  ft_printf("Error\n");
+  if (code == 1)
+    ft_printf("Wrong map's size.\n");
+  else if (code == 2)
+    ft_printf("The map must contain only 1 Player, 1 Exit and at least 1 Coin.\n");
+  else if (code == 3)
+    ft_printf("The map must be closed/surrounded by walls.\n");
+  else if (code == 4)
+    ft_printf("There isn't a valid path in the map.\n");
+  return (1);
+}
+
+int	verif_map_struct(t_game *game, t_verif_path *verif_path)
 {
 	if (verif_map_size(game))
-		return (1);
+		return (ft_error_struct(1));
 	if (verif_map_elem(game))
-		return (1);
+		return (ft_error_struct(2));
 	if (verif_map_wall(game))
-		return (1);
+    return (ft_error_struct(3));
+  if (verif_map_path(game, verif_path))
+    return (ft_error_struct(4));
 	return (0);
 }
