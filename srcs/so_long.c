@@ -202,3 +202,25 @@ int	main(int argc, char **argv)
     fr_free_game(&game);
 	return (0);
 }
+
+// int	main(int argc, char **argv)
+// {
+// 	t_game	game = {0, 0, 0, 0, 0, 0, 0, '\0'};
+// 	if (argc != 2)
+// 	{
+// 		printf("Error\nUsage: ./so_long <map.ber>\n");
+// 		return (1);
+// 	}
+// 	if (map_verify(argv[1], &game))
+// 		return (1);
+
+// 	init_mlx(&game);
+// 	load_images(&game);
+// 	draw_map(&game);
+
+// 	mlx_key_hook(game.win, handle_keypress, &game);
+// 	mlx_hook(game.win, 17, 0, close_game, &game); // Fecha ao clicar no "X"
+
+// 	mlx_loop(game.mlx);
+// 	return (0);
+// }
