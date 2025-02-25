@@ -16,7 +16,8 @@ RESET  = \033[0m
 # MLX_PATH = ./minilibx-alt
 # MLX_FLAGS = -L$(MLX_PATH) -lmlx -lXext -lX11 -I$(MLX_PATH)
 
-SRCS = srcs/so_long.c srcs/map_verify.c srcs/verif_map_struct.c
+SRCS = srcs/so_long.c srcs/verif_map.c srcs/verif_map_struct.c\
+      srcs/verif_map_struct_utils.c
 
 OBJS = $(SRCS:.c=.o)
 

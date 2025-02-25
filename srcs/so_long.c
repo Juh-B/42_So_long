@@ -162,7 +162,7 @@ int	main(int argc, char **argv)
   // n = 0;
 	if (argc == 2)
 	{
-		if (map_verify(argv[1], &game))
+		if (verif_map(argv[1], &game))
     {
       if (game.map)
         fr_free_game(&game);

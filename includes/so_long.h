@@ -60,8 +60,12 @@ typedef struct s_game {
     int    found_coins;
   } t_verif_path;
 
-  int	map_verify(char *map_file, t_game *game);
+  int	verif_map(char *map_file, t_game *game);
   int	verif_map_struct(t_game *game, t_verif_path *verif_path);
+  int	verif_map_wall(t_game *game);
+  int	verif_map_path(t_game *game, t_verif_path *verif_path);
+  void	ft_free_map(t_verif_path *path);
+
   // void init_game(t_game *game);
 
 #endif
