@@ -6,14 +6,14 @@
 /*   By: jcosta-b <jcosta-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 14:41:28 by jcosta-b          #+#    #+#             */
-/*   Updated: 2025/02/12 18:18:23 by jcosta-b         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:35:06 by jcosta-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 #define SO_LONG_H
 
-// # include "../minilibx-linux/mlx.h"
+# include "../minilibx-linux/mlx.h"
 # include "../libft/libft.h"
 
 # include <fcntl.h>  // Para open()
@@ -48,8 +48,14 @@ typedef struct s_game {
     int    player_row;
     size_t coins;
     char **map;
-    // void *mlx;
-    // void *win;
+    void *mlx;
+    void *win;
+    int img_size;
+    void  *img_wall;
+    void  *img_floor;
+    void  *img_coin;
+    void  *img_exit;
+    void  *img_player;
   } t_game;
 
   typedef struct s_verif_path {
@@ -65,8 +71,13 @@ typedef struct s_game {
   int	verif_map_wall(t_game *game);
   int	verif_map_path(t_game *game, t_verif_path *verif_path);
   void	ft_free_map(t_verif_path *path);
+  void	fr_free_game(t_game *game);
 
-  // void init_game(t_game *game);
+  void	init_mlx(t_game *game);
+  int	close_game(t_game *game);
+  int	handle_keypress(int keycode, t_game *game);
+  void	load_images(t_game *game);
+  void	draw_map(t_game *game);
 
 #endif
 
