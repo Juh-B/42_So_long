@@ -6,7 +6,7 @@
 /*   By: jcosta-b <jcosta-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:55:38 by jcosta-b          #+#    #+#             */
-/*   Updated: 2025/02/12 17:58:33 by jcosta-b         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:02:39 by jcosta-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	verif_map_size(t_game *game)
 		game->width++;
 		if (ft_strlen(game->map[row]) != game->length)
 			return (1);
-    row++;
+	row++;
 	}
 	return (0);
 }
@@ -60,11 +60,11 @@ static int	verif_map_elem(t_game *game)
 		{
 			if (inicialize_elem(game, game->map[row][col]))
 				return (1);
-      if (game->map[row][col] == 'P')
-      {
-        game->player_col = col;
-        game->player_row = row;
-      }
+		if (game->map[row][col] == 'P')
+		{
+			game->player_col = col;
+			game->player_row = row;
+		}
 			col++;
 		}
 		row++;
@@ -76,29 +76,29 @@ static int	verif_map_elem(t_game *game)
 
 static int	ft_error_struct(t_game *game, int code)
 {
-  ft_printf("Error\n");
-  if (code == 1)
-    ft_printf("Wrong map's size.\n");
-  else if (code == 2)
-  {
-    if (game->player != 1)
-    {
-      ft_printf("The map must contain only 1 PLAYER. ");
-      ft_printf("However, it includes %d.\n", game->player);
-    }
-    else if (game->exit != 1)
-    {
-      ft_printf("The map must contain only 1 EXIT. ");
-      ft_printf("However, it includes %d.\n", game->exit);
-    }
-    else if (game->coins < 1)
-      ft_printf("The map must contain at least 1 COIN.\n");
-  }
-  else if (code == 3)
-    ft_printf("The map must be closed/surrounded by walls.\n");
-  else if (code == 4)
-    ft_printf("There isn't a valid path in the map.\n");
-  return (1);
+	ft_printf("Error\n");
+	if (code == 1)
+		ft_printf("Wrong map's size.\n");
+	else if (code == 2)
+	{
+		if (game->player != 1)
+		{
+		ft_printf("The map must contain only 1 PLAYER. ");
+		ft_printf("However, it includes %d.\n", game->player);
+		}
+		else if (game->exit != 1)
+		{
+		ft_printf("The map must contain only 1 EXIT. ");
+		ft_printf("However, it includes %d.\n", game->exit);
+		}
+		else if (game->coins < 1)
+		ft_printf("The map must contain at least 1 COIN.\n");
+	}
+	else if (code == 3)
+		ft_printf("The map must be closed/surrounded by walls.\n");
+	else if (code == 4)
+		ft_printf("There isn't a valid path in the map.\n");
+	return (1);
 }
 
 int	verif_map_struct(t_game *game, t_verif_path *verif_path)
@@ -108,8 +108,8 @@ int	verif_map_struct(t_game *game, t_verif_path *verif_path)
 	if (verif_map_elem(game))
 		return (ft_error_struct(game, 2));
 	if (verif_map_wall(game))
-    return (ft_error_struct(game, 3));
-  if (verif_map_path(game, verif_path))
-    return (ft_error_struct(game, 4));
+		return (ft_error_struct(game, 3));
+	if (verif_map_path(game, verif_path))
+		return (ft_error_struct(game, 4));
 	return (0);
 }

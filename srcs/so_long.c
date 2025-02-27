@@ -6,13 +6,14 @@
 /*   By: jcosta-b <jcosta-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 15:56:46 by jcosta-b          #+#    #+#             */
-/*   Updated: 2025/02/12 18:19:56 by jcosta-b         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:30:57 by jcosta-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 // #include <mlx.h>
 #include "../includes/so_long.h"
+// #include "../minilibx-linux/mlx.h"
 
 // void	create_map(t_list **lst, char *content)
 // {
@@ -24,19 +25,19 @@
 // 	ft_lstadd_back(lst, new_node);
 // }
 
-void	placeof_P_E(size_t col, size_t row, t_player *player, t_exit *exit, char c)
-{
-	if (c == 'P')
-	{
-		player->col = col;
-		player->row = row;
-	}
-	if (c == 'E')
-	{
-		exit->col = col;
-		exit->row = row;
-	}
-}
+// void	placeof_P_E(size_t col, size_t row, t_player *player, t_exit *exit, char c)
+// {
+// 	if (c == 'P')
+// 	{
+// 		player->col = col;
+// 		player->row = row;
+// 	}
+// 	if (c == 'E')
+// 	{
+// 		exit->col = col;
+// 		exit->row = row;
+// 	}
+// }
 
 
 int	placeof_C(size_t col, size_t row, t_coins **coins)
@@ -103,13 +104,13 @@ int	elem_inic(t_game *game, t_player *player, t_exit *exit, t_coins **coins)
 		col = 0;
 		while (game->map[row][col])
 		{
-			if (game->map[row][col] == 'P' || game->map[row][col] == 'E')
-				placeof_P_E(col, row, player, exit, game->map[row][col]);
-			else if (game->map[row][col] == 'C')
-      {
+			// if (game->map[row][col] == 'P' || game->map[row][col] == 'E')
+			// 	placeof_P_E(col, row, player, exit, game->map[row][col]);
+			if (game->map[row][col] == 'C')
+			{
 				if (placeof_C(col, row, coins))
-          return (1);
-      }
+					return (1);
+			}
 			col++;
 		}
 		row++;
@@ -135,15 +136,15 @@ void	ft_free(t_coins *coins)
 
 void	fr_free_game(t_game *game)
 {
-  int i;
+	int	i;
 
-  i = 0;
-  while (game->map[i])
-  {
-    free(game->map[i]);
-    i++;
-  }
-  free(game->map);
+	i = 0;
+	while (game->map[i])
+	{
+		free(game->map[i]);
+		i++;
+	}
+	free(game->map);
 }
 
 int	main(int argc, char **argv)
@@ -151,10 +152,10 @@ int	main(int argc, char **argv)
 	// void	*mlx;
 	// void	*mlx_win;
 
-	t_game	game = {0, 0, 0, 0, 0, 0, 0, '\0'};
-	t_exit	exit = {0, 0, "false"};
-	t_player	player = {0, 0};
-	t_coins	*coins = NULL;
+	t_game	game = {0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL};
+	// t_exit	exit = {0, 0, "false"};
+	// t_player	player = {0, 0};
+	// t_coins	*coins = NULL;
   // int   n;
 
 	// printf("oi\n");
@@ -163,21 +164,27 @@ int	main(int argc, char **argv)
 	if (argc == 2)
 	{
 		if (verif_map(argv[1], &game))
-    {
-      if (game.map)
-        fr_free_game(&game);
-      return (1);
-    }
-    elem_inic(&game, &player, &exit, &coins);
-		if (elem_inic(&game, &player, &exit, &coins))
-    {
-      if (coins)
-        ft_free(coins);
-      return (1);
-    }
-	// 	// mlx = mlx_init();
-	// 	// mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-	// 	// mlx_loop(mlx);
+		{
+			if (game.map)
+				fr_free_game(&game);
+			return (1);
+		}
+		// elem_inic(&game, &player, &exit, &coins);
+		// if (elem_inic(&game, &player, &exit, &coins))
+		// {
+		// 	if (coins)
+		// 		ft_free(coins);
+		// 	return (1);
+    	// }
+	init_mlx(&game);
+	
+	load_images(&game);
+	draw_map(&game);
+	
+	mlx_key_hook(game.win, handle_keypress, &game);
+	mlx_hook(game.win, 17, 0, close_game, &game);
+	
+	mlx_loop(game.mlx);
 	}
   // printf("Player. (%zu, %ld)\n", player.x, player.y);
   // printf("Exit. (%zu, %ld)\n", exit.x, exit.y);
@@ -196,10 +203,10 @@ int	main(int argc, char **argv)
 		printf("map. %s\n", game.map[i]);
 		i++;
 	}
-  if (coins)
-    ft_free(coins);
-  if (game.map)
-    fr_free_game(&game);
+	if (coins)
+		ft_free(coins);
+	if (game.map)
+		fr_free_game(&game);
 	return (0);
 }
 
