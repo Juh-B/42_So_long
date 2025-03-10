@@ -13,13 +13,26 @@ RESET  = \033[0m
 MLX_PATH = ./minilibx-linux
 MLX_FLAGS = -L$(MLX_PATH) -lmlx -lXext -lX11
 
+OBJDIR = objs
+
 SRCS = srcs/so_long.c srcs/verif_map.c srcs/verif_map_struct.c\
 		srcs/verif_map_struct_utils.c srcs/init_game.c\
 		srcs/error_and_free.c srcs/movimentation.c srcs/initialize.c
 
+SRCS_BONUS = bonus/so_long.c bonus/verif_map.c bonus/verif_map_struct.c\
+		bonus/verif_map_struct_utils.c bonus/init_game.c\
+		bonus/error_and_free.c bonus/movimentation.c bonus/initialize.c
+
 OBJS = $(SRCS:.c=.o)
+OBJS_BONUS = $(SRCS_BONUS:.c=.o)
+
+ifeq ($(findstring bonus, $(MAKECMDGOALS)), bonus)
+	OBJS = $(OBJS_BONUS)
+endif
 
 all: $(NAME)
+
+bonus: $(NAME)
 
 $(NAME): $(OBJS)
 	@$(MAKE) -C $(LIBFT_DIR) --no-print-directory
@@ -36,7 +49,7 @@ fclean: clean
 	rm -f $(NAME)
 	@$(MAKE) -C $(LIBFT_DIR) fclean --no-print-directory
 
-re: fclean all
+re: fclean all bonus
 
 # NAME = so_long
 
