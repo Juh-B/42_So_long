@@ -1,35 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   error_and_free.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcosta-b <jcosta-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/29 15:56:46 by jcosta-b          #+#    #+#             */
-/*   Updated: 2025/03/10 17:01:26 by jcosta-b         ###   ########.fr       */
+/*   Created: 2025/03/10 11:09:13 by jcosta-b          #+#    #+#             */
+/*   Updated: 2025/03/10 17:01:16 by jcosta-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long_bonus.h"
-// #include <mlx.h>
-// #include "../minilibx-linux/mlx.h"
 
-int	main(int argc, char **argv)
+void	fr_free_game(t_game *game)
 {
-	t_game	game;
+	int	i;
 
-	if (argc != 2)
+	i = 0;
+	while (game->map[i])
 	{
-		ft_error_file(1);
-		return (0);
+		free(game->map[i]);
+		i++;
 	}
-	initialize_game(&game);
-	if (verif_map(argv[1], &game))
-	{
-		if (game.map)
-			fr_free_game(&game);
-		return (1);
-	}
-	init_game(&game);
-	return (0);
+	free(game->map);
+}
+
+int	ft_error_file(int code)
+{
+	if (code == 1)
+		ft_printf("%sError\n%sExpected: %s./so_long <map>.ber\n%s", \
+			RED, DEFAULT, YELLOW, DEFAULT);
+	else
+		ft_printf("%sError\n%s", RED, DEFAULT);
+	return (1);
 }
