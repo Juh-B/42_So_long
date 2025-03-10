@@ -76,29 +76,28 @@ static int	verif_map_elem(t_game *game)
 
 static int	ft_error_struct(t_game *game, int code)
 {
-	ft_printf("%sError\n%s", RED, DEFAULT);
+	ft_printf("Error\n");
 	if (code == 1)
-		ft_printf("%sWrong map's size.\n%s", WHITE, DEFAULT);
+		ft_printf("Wrong map's size.\n");
 	else if (code == 2)
 	{
 		if (game->player != 1)
 		{
-		ft_printf("The map must contain %sONLY 1 PLAYER.%s\nHowever, \
-      %sit includes %d.%s\n", WHITE, DEFAULT, YELLOW, game->player, DEFAULT);
+		ft_printf("The map must contain ONLY 1 PLAYER. ");
+		ft_printf("However, it includes %d.\n", game->player);
 		}
 		else if (game->exit != 1)
 		{
-		ft_printf("The map must contain %sONLY 1 EXIT.%s\nHowever, \
-      %sit includes %d.%s\n", WHITE, DEFAULT, YELLOW, game->exit, DEFAULT);
+		ft_printf("The map must contain ONLY 1 EXIT. ");
+		ft_printf("However, it includes %d.\n", game->exit);
 		}
 		else if (game->collectible < 1)
-		ft_printf("The map must contain %sAT LEAST 1 COLLECTIBLE.%s\n", \
-      WHITE, DEFAULT);
+		ft_printf("The map must contain AT LEAST 1 COLLECTIBLE.\n");
 	}
 	else if (code == 3)
-		ft_printf("%sThe map must be surrounded by walls.\n%s", WHITE, DEFAULT);
+		ft_printf("The map must be closed/surrounded by walls.\n");
 	else if (code == 4)
-		ft_printf("%sThere isn't a valid path in the map.\n%s", WHITE, DEFAULT);
+		ft_printf("There isn't a valid path in the map.\n");
 	return (1);
 }
 

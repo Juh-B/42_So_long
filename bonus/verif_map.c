@@ -12,6 +12,12 @@
 
 #include "../includes/so_long.h"
 
+static int	ft_error_file(void)
+{
+	ft_printf("Error\n");
+	return (1);
+}
+
 static int	verif_filetype(char *file)
 {
 	int		len;
