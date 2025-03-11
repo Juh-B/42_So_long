@@ -6,7 +6,7 @@
 /*   By: jcosta-b <jcosta-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:42:25 by jcosta-b          #+#    #+#             */
-/*   Updated: 2025/03/10 15:57:50 by jcosta-b         ###   ########.fr       */
+/*   Updated: 2025/03/11 15:28:56 by jcosta-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static char	*get_map(char *map, char *line)
 	return (map);
 }
 
-int	read_map_file(char *map_file, t_game *game)
+static int	read_map_file(char *map_file, t_game *game)
 {
 	int		fd;
 	char	*line;
@@ -58,7 +58,7 @@ int	read_map_file(char *map_file, t_game *game)
 	fd = open(map_file, O_RDONLY);
 	if (fd == -1)
 		return (-1);
-	while(1)
+	while (1)
 	{
 		line = get_next_line(fd);
 		if (!line)

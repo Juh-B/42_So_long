@@ -6,7 +6,7 @@
 /*   By: jcosta-b <jcosta-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:55:38 by jcosta-b          #+#    #+#             */
-/*   Updated: 2025/03/10 15:57:33 by jcosta-b         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:36:30 by jcosta-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	verif_map_elem(t_game *game)
 		row++;
 	}
 	if (game->exit != 1 || game->player != 1 || game->collectible < 1)
-		return (1);
+		return (2);
 	return (0);
 }
 
@@ -80,6 +80,8 @@ static int	ft_error_struct(t_game *game, int code)
 	if (code == 1)
 		ft_printf("Wrong map's size.\n");
 	else if (code == 2)
+		ft_printf("%s%s0, 1, P, C, E.%s\n", ERROR_ELEM, YELLOW, DEFAULT);
+	else if (code == 3)
 	{
 		if (game->player != 1)
 			ft_printf("%s%s%d.%s\n", ERROR_P, YELLOW, game->player, DEFAULT);
@@ -88,22 +90,28 @@ static int	ft_error_struct(t_game *game, int code)
 		else if (game->collectible < 1)
 			ft_printf("The map must contain AT LEAST 1 COLLECTIBLE.\n");
 	}
-	else if (code == 3)
-		ft_printf("The map must be surrounded by walls.\n");
 	else if (code == 4)
+		ft_printf("The map must be surrounded by walls.\n");
+	else if (code == 5)
 		ft_printf("There isn't a valid path in the map.\n");
 	return (1);
 }
 
 int	verif_map_struct(t_game *game)
 {
+	int	code;
+
+	code = 0;
 	if (verif_map_size(game))
 		return (ft_error_struct(game, 1));
-	if (verif_map_elem(game))
+	code = verif_map_elem(game);
+	if (code == 1)
 		return (ft_error_struct(game, 2));
-	if (verif_map_wall(game))
+	else if (code == 2)
 		return (ft_error_struct(game, 3));
-	if (verif_map_path(game))
+	if (verif_map_wall(game))
 		return (ft_error_struct(game, 4));
+	if (verif_map_path(game))
+		return (ft_error_struct(game, 5));
 	return (0);
 }

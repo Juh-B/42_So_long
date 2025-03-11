@@ -6,13 +6,13 @@
 /*   By: jcosta-b <jcosta-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:32:49 by jcosta-b          #+#    #+#             */
-/*   Updated: 2025/03/10 16:16:06 by jcosta-b         ###   ########.fr       */
+/*   Updated: 2025/03/11 15:38:16 by jcosta-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-void	clear_image(t_game *game)
+static void	clear_image(t_game *game)
 {
 	if (game->img_wall)
 		mlx_destroy_image(game->mlx_ptr, game->img_wall);
@@ -43,33 +43,7 @@ int	close_game(t_game *game)
 	return (0);
 }
 
-void	init_game(t_game *game)
-{
-	int	len;
-	int	wid;
-
-	len = game->length * 64;
-	wid = game->width * 64;
-	game->mlx_ptr = mlx_init();
-	if (!game->mlx_ptr)
-	{
-		perror("Error\nFailed to initialize MiniLibX.\n");
-		exit(1);
-	}
-	game->mlx_win = mlx_new_window(game->mlx_ptr, len, wid, "So Long");
-	if (!game->mlx_win)
-	{
-		perror("Error\nFailed to create window.\n");
-		exit(1);
-	}
-	load_images(game);
-	draw_map(game);
-	mlx_key_hook(game->mlx_win, handle_keypress, game);
-	mlx_hook(game->mlx_win, 17, 0, close_game, game);
-	mlx_loop(game->mlx_ptr);
-}
-
-void	load_images(t_game *game)
+static void	load_images(t_game *game)
 {
 	game->img_wall = mlx_xpm_file_to_image(game->mlx_ptr, \
 		"textures/wall.xpm", &game->img_size, &game->img_size);
@@ -110,4 +84,30 @@ void	draw_map(t_game *game)
 		}
 	row++;
 	}
+}
+
+void	init_game(t_game *game)
+{
+	int	len;
+	int	wid;
+
+	len = game->length * 64;
+	wid = game->width * 64;
+	game->mlx_ptr = mlx_init();
+	if (!game->mlx_ptr)
+	{
+		perror("Error\nFailed to initialize MiniLibX.\n");
+		exit(1);
+	}
+	game->mlx_win = mlx_new_window(game->mlx_ptr, len, wid, "So Long");
+	if (!game->mlx_win)
+	{
+		perror("Error\nFailed to create window.\n");
+		exit(1);
+	}
+	load_images(game);
+	draw_map(game);
+	mlx_key_hook(game->mlx_win, handle_keypress, game);
+	mlx_hook(game->mlx_win, 17, 0, close_game, game);
+	mlx_loop(game->mlx_ptr);
 }

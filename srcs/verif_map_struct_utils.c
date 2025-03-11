@@ -6,7 +6,7 @@
 /*   By: jcosta-b <jcosta-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:55:38 by jcosta-b          #+#    #+#             */
-/*   Updated: 2025/03/10 16:04:22 by jcosta-b         ###   ########.fr       */
+/*   Updated: 2025/03/11 15:31:29 by jcosta-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	valid_path(char **map, int col, int row, t_verif_path *verif_path)
 	valid_path(map, col, (row - 1), verif_path);
 }
 
-void	ft_free_path(t_verif_path *path)
+static void	ft_free_path(t_verif_path *path)
 {
 	int	i;
 
@@ -73,7 +73,7 @@ void	ft_free_path(t_verif_path *path)
 	free(path->map);
 }
 
-int	map_path(t_game *game, t_verif_path *verif_path)
+static int	map_path(t_game *game, t_verif_path *verif_path)
 {
 	int	row;
 	int	row_len;
@@ -100,7 +100,7 @@ int	map_path(t_game *game, t_verif_path *verif_path)
 int	verif_map_path(t_game *game)
 {
 	t_verif_path	verif_path;
-	
+
 	initialize_path(&verif_path);
 	if (map_path(game, &verif_path))
 		return (1);
