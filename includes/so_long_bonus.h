@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   so_long_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcosta-b <jcosta-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 14:41:28 by jcosta-b          #+#    #+#             */
-/*   Updated: 2025/03/11 16:57:05 by jcosta-b         ###   ########.fr       */
+/*   Updated: 2025/03/11 15:40:45 by jcosta-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef SO_LONG_BONUS_H
+# define SO_LONG_BONUS_H
 
 # include "../minilibx-linux/mlx.h"
 # include "../libft/libft.h"
@@ -50,6 +50,7 @@ typedef struct s_game {
 	void	*img_player;
 	void	*img_exit;
 	int		img_size;
+	char	direction;
 }	t_game;
 
 typedef struct s_verif_path {
@@ -65,8 +66,8 @@ int		verif_map_struct(t_game *game);
 int		verif_map_wall(t_game *game);
 int		verif_map_path(t_game *game);
 int		handle_keypress(int keycode, t_game *game);
-int		close_game(t_game *game);
 int		ft_error_file(int code);
+int		close_game(t_game *game);
 
 void	initialize_path(t_verif_path *verif_path);
 void	initialize_game(t_game *game);
