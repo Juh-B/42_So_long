@@ -29,6 +29,7 @@ void	initialize_game(t_game *game)
 	game->img_wall = NULL;
 	game->img_collectible = NULL;
 	game->img_player = NULL;
+  game->img_enemy = NULL;
 	game->img_exit = NULL;
 	game->img_size = 64;
 	game->direction = '\0';

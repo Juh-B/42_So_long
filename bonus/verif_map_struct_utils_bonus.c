@@ -47,7 +47,7 @@ static void	valid_path(char **map, int col, int row, t_verif_path *verif_path)
 		return ;
 	if (row < 0 || row >= (int)verif_path->rows)
 		return ;
-	if (map[row][col] == '1' || map[row][col] == 'V')
+	if (map[row][col] == '1' || map[row][col] == 'V' || map[row][col] == 'Y')
 		return ;
 	if (map[row][col] == 'E')
 		verif_path->found_exit = 1;

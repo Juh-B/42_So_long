@@ -48,6 +48,7 @@ typedef struct s_game {
 	void	*img_wall;
 	void	*img_collectible;
 	void	*img_player;
+  void	*img_enemy;
 	void	*img_exit;
 	int		img_size;
 	char	direction;
@@ -67,7 +68,8 @@ int		verif_map_wall(t_game *game);
 int		verif_map_path(t_game *game);
 int		handle_keypress(int keycode, t_game *game);
 int		ft_error_file(int code);
-int		close_game(t_game *game);
+int   close_game(t_game *game);
+int   print_close_game(t_game *game, int code);
 
 void	initialize_path(t_verif_path *verif_path);
 void	initialize_game(t_game *game);

@@ -55,7 +55,9 @@ static void	move_player(t_game *game, int dx, int dy)
 			"textures/exit_open.xpm", &game->img_size, &game->img_size);
 	}
 	if (game->map[new_y][new_x] == 'E' && game->collectible == 0)
-		close_game(game);
+    print_close_game(game, 1);
+  if (game->map[new_y][new_x] == 'Y')
+    print_close_game(game, 3);
 	game->moves++;
 	ft_printf("Moves: %s%d\n%s", GREEN, game->moves, DEFAULT);
 	update_map(game, new_x, new_y);
@@ -64,7 +66,7 @@ static void	move_player(t_game *game, int dx, int dy)
 int	handle_keypress(int keycode, t_game *game)
 {
 	if (keycode == 65307)
-		close_game(game);
+    print_close_game(game, 2);
 	else if (keycode == 'w' || keycode == 65362)
 	{
 		game->direction = 'W';

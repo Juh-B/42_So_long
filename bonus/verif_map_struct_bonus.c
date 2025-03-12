@@ -36,7 +36,7 @@ static int	verif_map_size(t_game *game)
 
 static int	inicialize_elem(t_game *game, char c)
 {
-	if (c != '0' && c != '1' && c != 'E' && c != 'P' && c != 'C')
+	if (c != '0' && c != '1' && c != 'E' && c != 'P' && c != 'C' && c != 'Y')
 		return (1);
 	if (c == 'E')
 		game->exit++;
@@ -80,7 +80,7 @@ static int	ft_error_struct(t_game *game, int code)
 	if (code == 1)
 		ft_printf("Wrong map's size.\n");
 	else if (code == 2)
-		ft_printf("%s%s0, 1, P, C, E.%s\n", ERROR_ELEM, YELLOW, DEFAULT);
+		ft_printf("%s%s0, 1, P, C, E, Y.%s\n", ERROR_ELEM, YELLOW, DEFAULT);
 	else if (code == 3)
 	{
 		if (game->player != 1)

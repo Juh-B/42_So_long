@@ -24,17 +24,32 @@ static void	clear_image(t_game *game)
 		mlx_destroy_image(game->mlx_ptr, game->img_exit);
 	if (game->img_player)
 		mlx_destroy_image(game->mlx_ptr, game->img_player);
+  if (game->img_enemy)
+		mlx_destroy_image(game->mlx_ptr, game->img_enemy);
 }
+
+int print_close_game(t_game *game, int code)
+{
+  if (code == 1)
+    ft_printf("\n%s--| Game completed! |--\n%sTotal Moves: %s%d\n\n%s",\
+      GREEN, WHITE, BOLD_G, game->moves, DEFAULT);
+  else if (code == 2)
+    ft_printf("\n%s--| Game interrupted |--\n%sTotal Moves: %s%d\n\n%s",\
+      YELLOW, WHITE, BOLD_G, game->moves, DEFAULT);
+  else if (code == 3)
+    ft_printf("\n%s--| Game over |--\n%sTotal Moves: %s%d\n\n%s",\
+      RED, WHITE, BOLD_G, game->moves, DEFAULT);
+  return (close_game(game));
+}
+
 
 int	close_game(t_game *game)
 {
 	if (game->map)
 		fr_free_game(game);
 	clear_image(game);
-	if (game->mlx_ptr && game->mlx_win)
+  if (game->mlx_ptr && game->mlx_win)
 	{
-		ft_printf("\n%s--| Game Finished |--\n%sTotal Moves: %s%d\n\n%s", \
-			YELLOW, WHITE, BOLD_G, game->moves, DEFAULT);
 		mlx_destroy_window(game->mlx_ptr, game->mlx_win);
 		mlx_destroy_display(game->mlx_ptr);
 		free(game->mlx_ptr);
@@ -55,6 +70,26 @@ static void	load_images(t_game *game)
 		"textures/exit_close.xpm", &game->img_size, &game->img_size);
 	game->img_player = mlx_xpm_file_to_image(game->mlx_ptr, \
 		"textures/bonus/bunny_front.xpm", &game->img_size, &game->img_size);
+  game->img_enemy = mlx_xpm_file_to_image(game->mlx_ptr, \
+    "textures/bonus/enemy.xpm", &game->img_size, &game->img_size);
+}
+
+void *put_img(t_game *game, size_t col, size_t row)
+{
+  void	*img;
+
+  img = game->img_floor;
+  if (game->map[row][col] == '1')
+    img = game->img_wall;
+  else if (game->map[row][col] == 'C')
+    img = game->img_collectible;
+  else if (game->map[row][col] == 'E')
+    img = game->img_exit;
+  else if (game->map[row][col] == 'P')
+    img = game->img_player;
+  else if (game->map[row][col] == 'Y')
+    img = game->img_enemy;
+  return (img);
 }
 
 void	draw_map(t_game *game)
@@ -69,15 +104,7 @@ void	draw_map(t_game *game)
 		col = 0;
 		while (col < game->length)
 		{
-			img = game->img_floor;
-			if (game->map[row][col] == '1')
-				img = game->img_wall;
-			else if (game->map[row][col] == 'C')
-				img = game->img_collectible;
-			else if (game->map[row][col] == 'E')
-				img = game->img_exit;
-			else if (game->map[row][col] == 'P')
-				img = game->img_player;
+			img = put_img(game, col, row);
 			mlx_put_image_to_window(game->mlx_ptr, game->mlx_win, \
 				img, col * 64, row * 64);
 			col++;
