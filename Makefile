@@ -3,13 +3,13 @@ NAME = so_long
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-GREEN  = \033[1;32m
-RESET  = \033[0m
-
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 MLX_PATH = ./minilibx-linux
 MLX_FLAGS = -L$(MLX_PATH) -lmlx -lXext -lX11
+
+GREEN  = \033[1;32m
+RESET  = \033[0m
 
 SRCS = srcs/so_long.c srcs/verif_map.c srcs/verif_map_struct.c\
 		srcs/verif_map_struct_utils.c srcs/init_game.c\
