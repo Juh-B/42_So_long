@@ -6,7 +6,7 @@
 /*   By: jcosta-b <jcosta-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 16:00:41 by jcosta-b          #+#    #+#             */
-/*   Updated: 2025/03/10 16:01:28 by jcosta-b         ###   ########.fr       */
+/*   Updated: 2025/03/12 12:05:30 by jcosta-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	initialize_game(t_game *game)
 	game->img_player = NULL;
 	game->img_exit = NULL;
 	game->img_size = 64;
+	game->end_game = 2;
 }
 
 void	initialize_path(t_verif_path *verif_path)

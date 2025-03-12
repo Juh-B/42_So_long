@@ -6,7 +6,7 @@
 /*   By: jcosta-b <jcosta-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:32:49 by jcosta-b          #+#    #+#             */
-/*   Updated: 2025/03/11 15:38:16 by jcosta-b         ###   ########.fr       */
+/*   Updated: 2025/03/12 12:04:18 by jcosta-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,12 @@ int	close_game(t_game *game)
 	clear_image(game);
 	if (game->mlx_ptr && game->mlx_win)
 	{
-		ft_printf("\n%s--| Game Finished |--\n%sTotal Moves: %s%d\n\n%s", \
-			YELLOW, WHITE, BOLD_G, game->moves, DEFAULT);
+		if (game->end_game == 1)
+			ft_printf("\n%s--| Game completed! |--\n%sTotal Moves: %s%d\n\n%s", \
+				GREEN, WHITE, BOLD_G, game->moves, DEFAULT);
+		else if (game->end_game == 2)
+			ft_printf("\n%s--| Game interrupted |--\n%sTotal Moves: %s%d\n\n%s", \
+				YELLOW, WHITE, BOLD_G, game->moves, DEFAULT);
 		mlx_destroy_window(game->mlx_ptr, game->mlx_win);
 		mlx_destroy_display(game->mlx_ptr);
 		free(game->mlx_ptr);

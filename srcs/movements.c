@@ -6,7 +6,7 @@
 /*   By: jcosta-b <jcosta-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:10:25 by jcosta-b          #+#    #+#             */
-/*   Updated: 2025/03/11 16:49:53 by jcosta-b         ###   ########.fr       */
+/*   Updated: 2025/03/12 12:19:29 by jcosta-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,12 @@ static void	move_player(t_game *game, int dx, int dy)
 		game->img_exit = mlx_xpm_file_to_image(game->mlx_ptr, \
 			"textures/exit_open.xpm", &game->img_size, &game->img_size);
 	}
-	if (game->map[new_y][new_x] == 'E' && game->collectible == 0)
-		close_game(game);
 	game->moves++;
+	if (game->map[new_y][new_x] == 'E' && game->collectible == 0)
+	{
+		game->end_game = 1;
+		close_game(game);
+	}
 	ft_printf("Moves: %s%d\n%s", GREEN, game->moves, DEFAULT);
 	update_map(game, new_x, new_y);
 }
