@@ -6,7 +6,7 @@
 /*   By: jcosta-b <jcosta-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 14:41:28 by jcosta-b          #+#    #+#             */
-/*   Updated: 2025/03/11 16:57:05 by jcosta-b         ###   ########.fr       */
+/*   Updated: 2025/03/12 12:05:57 by jcosta-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_game {
 	void	*img_player;
 	void	*img_exit;
 	int		img_size;
+	int		end_game;
 }	t_game;
 
 typedef struct s_verif_path {

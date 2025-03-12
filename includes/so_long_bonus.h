@@ -6,7 +6,7 @@
 /*   By: jcosta-b <jcosta-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 14:41:28 by jcosta-b          #+#    #+#             */
-/*   Updated: 2025/03/11 15:40:45 by jcosta-b         ###   ########.fr       */
+/*   Updated: 2025/03/12 12:16:33 by jcosta-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,10 @@ typedef struct s_game {
 	void	*img_wall;
 	void	*img_collectible;
 	void	*img_player;
-  void	*img_enemy;
+	void	*img_enemy;
 	void	*img_exit;
 	int		img_size;
+	int		end_game;
 	char	direction;
 }	t_game;
 
@@ -68,13 +69,13 @@ int		verif_map_wall(t_game *game);
 int		verif_map_path(t_game *game);
 int		handle_keypress(int keycode, t_game *game);
 int		ft_error_file(int code);
-int   close_game(t_game *game);
-int   print_close_game(t_game *game, int code);
+int		close_game(t_game *game);
 
 void	initialize_path(t_verif_path *verif_path);
 void	initialize_game(t_game *game);
 void	init_game(t_game *game);
 void	draw_map(t_game *game);
 void	fr_free_game(t_game *game);
+void	clear_image(t_game *game);
 
 #endif
