@@ -6,11 +6,44 @@
 /*   By: jcosta-b <jcosta-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:10:25 by jcosta-b          #+#    #+#             */
-/*   Updated: 2025/03/11 16:50:38 by jcosta-b         ###   ########.fr       */
+/*   Updated: 2025/03/12 12:19:14 by jcosta-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long_bonus.h"
+
+int	close_game(t_game *game)
+{
+	if (game->map)
+		fr_free_game(game);
+	clear_image(game);
+	if (game->mlx_ptr && game->mlx_win)
+	{
+		if (game->end_game == 1)
+			ft_printf("\n%s--| Game completed! |--\n%sTotal Moves: %s%d\n\n%s", \
+				GREEN, WHITE, BOLD_G, game->moves, DEFAULT);
+		else if (game->end_game == 2)
+			ft_printf("\n%s--| Game interrupted |--\n%sTotal Moves: %s%d\n\n%s", \
+				YELLOW, WHITE, BOLD_G, game->moves, DEFAULT);
+		else if (game->end_game == 3)
+			ft_printf("\n%s--| Game over |--\n%sTotal Moves: %s%d\n\n%s", \
+				RED, WHITE, BOLD_G, game->moves, DEFAULT);
+		mlx_destroy_window(game->mlx_ptr, game->mlx_win);
+		mlx_destroy_display(game->mlx_ptr);
+		free(game->mlx_ptr);
+	}
+	exit(0);
+	return (0);
+}
+
+static void	ending_game(t_game *game, char c)
+{
+	if (c == 'E' && game->collectible == 0)
+		game->end_game = 1;
+	if (c == 'Y')
+		game->end_game = 3;
+	close_game(game);
+}
 
 static void	update_map(t_game *game, int new_x, int new_y)
 {
@@ -37,16 +70,18 @@ static void	update_map(t_game *game, int new_x, int new_y)
 
 static void	move_player(t_game *game, int dx, int dy)
 {
-	int	new_x;
-	int	new_y;
+	int		new_x;
+	int		new_y;
+	char	c;
 
 	new_x = game->player_col + dx;
 	new_y = game->player_row + dy;
-	if (game->map[new_y][new_x] == '1')
+	c = game->map[new_y][new_x];
+	if (c == '1')
 		return ;
-	if (game->map[new_y][new_x] == 'E' && game->collectible != 0)
+	if (c == 'E' && game->collectible != 0)
 		return ;
-	if (game->map[new_y][new_x] == 'C')
+	if (c == 'C')
 		game->collectible--;
 	if (game->collectible == 0)
 	{
@@ -54,11 +89,9 @@ static void	move_player(t_game *game, int dx, int dy)
 		game->img_exit = mlx_xpm_file_to_image(game->mlx_ptr, \
 			"textures/exit_open.xpm", &game->img_size, &game->img_size);
 	}
-	if (game->map[new_y][new_x] == 'E' && game->collectible == 0)
-    print_close_game(game, 1);
-  if (game->map[new_y][new_x] == 'Y')
-    print_close_game(game, 3);
 	game->moves++;
+	if (c == 'Y' || (c == 'E' && game->collectible == 0))
+		ending_game(game, c);
 	ft_printf("Moves: %s%d\n%s", GREEN, game->moves, DEFAULT);
 	update_map(game, new_x, new_y);
 }
@@ -66,7 +99,7 @@ static void	move_player(t_game *game, int dx, int dy)
 int	handle_keypress(int keycode, t_game *game)
 {
 	if (keycode == 65307)
-    print_close_game(game, 2);
+		close_game(game);
 	else if (keycode == 'w' || keycode == 65362)
 	{
 		game->direction = 'W';

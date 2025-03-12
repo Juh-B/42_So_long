@@ -6,7 +6,7 @@
 /*   By: jcosta-b <jcosta-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 16:00:41 by jcosta-b          #+#    #+#             */
-/*   Updated: 2025/03/11 15:11:22 by jcosta-b         ###   ########.fr       */
+/*   Updated: 2025/03/12 11:07:44 by jcosta-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@ void	initialize_game(t_game *game)
 	game->img_wall = NULL;
 	game->img_collectible = NULL;
 	game->img_player = NULL;
-  game->img_enemy = NULL;
+	game->img_enemy = NULL;
 	game->img_exit = NULL;
 	game->img_size = 64;
+	game->end_game = 2;
 	game->direction = '\0';
 }
 
