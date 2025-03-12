@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_game.c                                        :+:      :+:    :+:   */
+/*   init_game_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcosta-b <jcosta-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:32:49 by jcosta-b          #+#    #+#             */
-/*   Updated: 2025/03/11 15:38:16 by jcosta-b         ###   ########.fr       */
+/*   Updated: 2025/03/11 15:42:51 by jcosta-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "../includes/so_long_bonus.h"
 
 static void	clear_image(t_game *game)
 {
@@ -54,7 +54,7 @@ static void	load_images(t_game *game)
 	game->img_exit = mlx_xpm_file_to_image(game->mlx_ptr, \
 		"textures/exit_close.xpm", &game->img_size, &game->img_size);
 	game->img_player = mlx_xpm_file_to_image(game->mlx_ptr, \
-		"textures/player.xpm", &game->img_size, &game->img_size);
+		"textures/bonus/bunny_front.xpm", &game->img_size, &game->img_size);
 }
 
 void	draw_map(t_game *game)

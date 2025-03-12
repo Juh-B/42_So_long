@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   verif_map_struct_utils.c                           :+:      :+:    :+:   */
+/*   verif_map_struct_utils_bonus.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcosta-b <jcosta-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:55:38 by jcosta-b          #+#    #+#             */
-/*   Updated: 2025/03/11 15:31:29 by jcosta-b         ###   ########.fr       */
+/*   Updated: 2025/03/11 15:44:13 by jcosta-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "../includes/so_long_bonus.h"
 
 int	verif_map_wall(t_game *game)
 {

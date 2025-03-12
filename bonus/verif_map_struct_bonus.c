@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   verif_map_struct.c                                 :+:      :+:    :+:   */
+/*   verif_map_struct_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcosta-b <jcosta-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:55:38 by jcosta-b          #+#    #+#             */
-/*   Updated: 2025/03/11 16:36:30 by jcosta-b         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:53:17 by jcosta-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "../includes/so_long_bonus.h"
 
 static int	verif_map_size(t_game *game)
 {
